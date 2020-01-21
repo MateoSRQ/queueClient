@@ -36,20 +36,15 @@ export default class Component extends React.Component<Props, State> {
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-    handlePageChange (e: number): void {
+    async handlePageChange (e: number): Promise<void> {
         log.info('Page:handlePageChange reached');
         console.log(e)
-        this.loadData(e);
+        await this.loadData(e);
     }
 
     async componentDidMount(): Promise<void> {
         log.info('Page:componentDidMount reached');
-        //await this.loadData();
-        let {data} = await axios.get(' http://127.0.0.1:3333/api/nodos');
-        this.setState({
-            data: data,
-            status: 'loaded'
-        })
+        await this.loadData();
     }
 
     async loadData(page = 1): Promise<void> {

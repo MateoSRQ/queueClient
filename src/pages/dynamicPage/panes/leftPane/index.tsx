@@ -65,6 +65,18 @@ export default class Component extends React.Component<Props, State> {
         this.props.onPageChange(e)
     }
 
+    componentDidUpdate(prevProps: Props) {
+        // Uso tipico (no olvides de comparar los props):
+        log.info('Page.LeftPane:componentDidUpdate reached');
+        console.log('888888888888888')
+        if (this.props !== prevProps) {
+            console.log('9999999999999')
+            this.setState( {
+                data: this.props.data
+            });
+        }
+    }
+
     render() {
         log.info('Page.LeftPane reached');
         let data = this.state.data.data;
