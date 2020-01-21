@@ -1,5 +1,5 @@
 @value listHeader: 100px;
-@value listFooter: 100px;
+@value listFooter: 70px;
 
 .component {
     width: calc(100% - 20px);
@@ -14,8 +14,6 @@
     display: flex;
     flex-direction: column;
 }
-
-
 
 .header {
     height: listHeader;
@@ -58,6 +56,13 @@
 
 .footer {
     height: listFooter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    margin: 10px;
 }
 
 .headerTitle {

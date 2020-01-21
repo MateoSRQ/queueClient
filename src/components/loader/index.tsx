@@ -25,8 +25,6 @@ export default class Component extends React.Component<Props, State> {
     constructor(props: Props) {
         log.info('Loader:constructor reached');
         super(props);
-        console.log('OOOO');
-        console.log(props);
         this.state = {
             status: this.props.status
         };
@@ -44,10 +42,19 @@ export default class Component extends React.Component<Props, State> {
         }
     }
 
+    componentDidUpdate(prevProps: any) {
+        log.info('Loader:componentDidUpdate reached');
+        // Uso tipico (no olvides de comparar los props):
+        if (this.props.status !== prevProps.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         log.debug('Loader:render reached');
         let loaded = (this.state.status == 'loaded')?style.loaded:null;
-        console.log(loaded);
         return (
             <div className={[style.component].join(' ')}>
                 <div  className={[style.container].join(' ')}>

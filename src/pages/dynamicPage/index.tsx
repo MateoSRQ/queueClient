@@ -4,7 +4,6 @@ import log from 'loglevel';
 import SplitPane from 'react-split-pane';
 
 import Loader from '../../components/loader';
-import Menu from '../../components/menu';
 import Header from '../header';
 import LeftPane from './panes/leftPane';
 import RightPane from './panes/rightPane';
@@ -15,7 +14,7 @@ import axios from 'axios';
 
 
 interface State {
-    data?: Array<any>,
+    data?: any,
     status: string,
 }
 
@@ -31,16 +30,35 @@ export default class Component extends React.Component<Props, State> {
         super(props);
         this.barRef = React.createRef();
         this.state = {
-            status: 'loading'
+            status: 'loading',
+            data: []
         }
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange (e: number): void {
+        log.info('Page:handlePageChange reached');
+        console.log(e)
+        this.loadData(e);
     }
 
     async componentDidMount(): Promise<void> {
         log.info('Page:componentDidMount reached');
-        // if (this!.barRef!.current!.offsetHeight > 0) {
-        //     this.setState({height: this!.barRef!.current!.offsetHeight});
-        // }
+        //await this.loadData();
         let {data} = await axios.get(' http://127.0.0.1:3333/api/nodos');
+        this.setState({
+            data: data,
+            status: 'loaded'
+        })
+    }
+
+    async loadData(page = 1): Promise<void> {
+        log.info('Page:loadData reached');
+        this.setState({
+            status: 'loading'
+        });
+
+        let {data} = await axios.get(' http://127.0.0.1:3333/api/nodos?page=' + page);
         this.setState({
             data: data,
             status: 'loaded'
@@ -49,8 +67,11 @@ export default class Component extends React.Component<Props, State> {
 
     render() {
         log.info('Page:render reached');
-        console.log('XXXX');
-        console.log(this.state);
+        let leftPanel = null;
+        if (this.state.data.length != 0) {
+            leftPanel = <LeftPane data={this.state.data} onPageChange={this.handlePageChange}/>
+        }
+
         return (
             <Loader size={50} status={this.state.status} tip='YEAH'>
                 <div className={[style.component].join(' ')}>
@@ -59,7 +80,7 @@ export default class Component extends React.Component<Props, State> {
                     </div>
                     <SplitPane split="vertical" minSize={320} maxSize={480} className={[style.pageContainer].join(' ')}>
                         <div className={[style.leftPanel].join(' ')}>
-                            <LeftPane />
+                            {leftPanel}
                         </div>
                         <div className={[style.rightPanel].join(' ')}>
                             <RightPane />

@@ -2,16 +2,19 @@ import React from 'react';
 import style from './index.module.css';
 import log from 'loglevel';
 import {Form, Icon, Input, Layout} from 'antd';
+import { Pagination } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
+
 
 interface ItemState {
 
 }
 
 interface ItemProps {
+    data?: any
 }
 
 
@@ -23,8 +26,12 @@ class Item extends React.Component<ItemProps, ItemState> {
 
     render() {
         log.info('Page.LeftPane reached');
+        console.log('YYYY');
+        console.log(this.props.data._id)
         return (
-            <div  className={[style.item].join(' ')}  />
+            <div key={this.props.data._id} className={[style.item].join(' ')} >
+                {this.props.data._id}
+            </div>
         )
     }
 
@@ -32,10 +39,12 @@ class Item extends React.Component<ItemProps, ItemState> {
 
 
 interface State {
-    height: number,
+    data: any
 }
 
 interface Props {
+    data: any,
+    onPageChange?: any
 }
 
 export default class Component extends React.Component<Props, State> {
@@ -46,19 +55,23 @@ export default class Component extends React.Component<Props, State> {
         super(props);
         this.barRef = React.createRef();
         this.state = {
-            height: 0
+            data: props.data
         }
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-    componentDidMount(): void {
-        log.info('Page.LeftPane:componentDidMount reached');
-        // if (this!.barRef!.current!.offsetHeight > 0) {
-        //     this.setState({height: this!.barRef!.current!.offsetHeight});
-        // }
+    handlePageChange (e: number): void {
+        log.info('Page.LeftPane:handlePageChange reached');
+        this.props.onPageChange(e)
     }
 
     render() {
         log.info('Page.LeftPane reached');
+        let data = this.state.data.data;
+
+        let items = data.map( (itemData: any) => {
+            return <Item data={itemData} />
+        })
 
         return (
             <div className={[style.component].join(' ')}>
@@ -71,29 +84,18 @@ export default class Component extends React.Component<Props, State> {
                 </div>
                 <Scrollbars className={[style.body].join(' ')}>
                     <div className={[style.list].join(' ')}>
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
-                        <Item />
+                        { items}
                     </div>
                 </Scrollbars>
-                <div className={[style.footer].join(' ')}></div>
+                <div className={[style.footer].join(' ')}>
+                    <Pagination
+                        current={this.state.data.current}
+                        pageSize={this.state.data.size}
+                        total={this.state.data.total}
+                        size="small"
+                        onChange={this.handlePageChange}
+                    />
+                </div>
             </div>
         );
     }

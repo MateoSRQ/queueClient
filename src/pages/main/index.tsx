@@ -36,7 +36,6 @@ export default class Component extends React.Component<Props, State> {
 
     render() {
         log.info('Main:render reached');
-
         return (
             <div className={[style.component].join(' ')}>
                 <div className={[style.sidebarContainer].join(' ')} ref={this.sidebarRef}>
