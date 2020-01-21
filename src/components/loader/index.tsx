@@ -25,8 +25,10 @@ export default class Component extends React.Component<Props, State> {
     constructor(props: Props) {
         log.info('Loader:constructor reached');
         super(props);
+        console.log('OOOO');
+        console.log(props);
         this.state = {
-            status: 'loading'
+            status: this.props.status
         };
 
     }
