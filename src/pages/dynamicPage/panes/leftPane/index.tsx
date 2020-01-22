@@ -15,7 +15,8 @@ interface ItemState {
 
 interface ItemProps {
     data?: any
-    key: string
+    key: string,
+    handleClick?: any
 }
 
 
@@ -23,21 +24,23 @@ class Item extends React.Component<ItemProps, ItemState> {
     constructor(props: ItemProps) {
         log.info('Page.LeftPane.Item:constructor reached');
         super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e: any) {
+        log.info('Page.LeftPane.Item:handleClick reached');
+        this.props.handleClick(e);
     }
 
     render() {
         log.info('Page.LeftPane reached');
-        console.log('YYYY');
-        console.log(this.props.data._id)
         return (
-            <div  className={[style.item].join(' ')} >
+            <div className={[style.item].join(' ')} onClick={() => { this.handleClick(this.props.data._id); }}>
                 {this.props.data._id}
             </div>
         )
     }
-
 }
-
 
 interface State {
     data: any
@@ -59,6 +62,7 @@ export default class Component extends React.Component<Props, State> {
             data: props.data
         }
         this.handlePageChange = this.handlePageChange.bind(this);
+        this.handleItemClick = this.handleItemClick .bind(this);
     }
 
     handlePageChange (e: number): void {
@@ -66,12 +70,15 @@ export default class Component extends React.Component<Props, State> {
         this.props.onPageChange(e)
     }
 
+    handleItemClick (e: any) {
+        log.info('Page.LeftPane:handleItemClick reached');
+        console.log(e);
+    }
+
     componentDidUpdate(prevProps: Props) {
         // Uso tipico (no olvides de comparar los props):
         log.info('Page.LeftPane:componentDidUpdate reached');
-        console.log('888888888888888')
         if (this.props !== prevProps) {
-            console.log('9999999999999')
             this.setState( {
                 data: this.props.data
             });
@@ -81,10 +88,8 @@ export default class Component extends React.Component<Props, State> {
     render() {
         log.info('Page.LeftPane reached');
         let data = this.state.data.data;
-        console.log('----')
-        console.log (this.state.data);
         let items = data.map( (itemData: any) => {
-            return <Item data={itemData} key={itemData._id}/>
+            return <Item data={itemData} key={itemData._id} handleClick={ this.handleItemClick }/>
         })
 
         return (

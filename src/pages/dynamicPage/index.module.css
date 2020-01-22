@@ -19,7 +19,7 @@
 }
 
 .leftPanel {
-    height: calc(100% - titleHeight);
+    height: calc(100% - 0px);
     border-radius: 6px;
 }
 
