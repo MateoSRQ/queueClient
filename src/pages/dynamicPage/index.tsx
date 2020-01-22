@@ -68,21 +68,24 @@ export default class Component extends React.Component<Props, State> {
         }
 
         return (
-            <Loader size={50} status={this.state.status} tip='YEAH'>
-                <div className={[style.component].join(' ')}>
-                    <div className={[style.titleContainer].join(' ')}>
-                        <Header />
-                    </div>
-                    <SplitPane split="vertical" minSize={320} maxSize={480} className={[style.pageContainer].join(' ')}>
-                        <div className={[style.leftPanel].join(' ')}>
-                            {leftPanel}
-                        </div>
-                        <div className={[style.rightPanel].join(' ')}>
-                            <RightPane />
-                        </div>
-                    </SplitPane>
+            <div className={[style.component].join(' ')}>
+                <div className={[style.titleContainer].join(' ')}>
+                    <Header />
                 </div>
-            </Loader>
+                <SplitPane split="vertical" minSize={320} maxSize={480} className={[style.pageContainer].join(' ')}>
+                    <div className={[style.leftPanel].join(' ')}>
+                        <Loader size={50} status={this.state.status} duration={3000}>
+                            {leftPanel}
+                        </Loader>
+                    </div>
+
+                    <div className={[style.rightPanel].join(' ')}>
+                        <Loader size={50} status='loading' duration={3000}>
+                            <RightPane />
+                        </Loader>
+                    </div>
+                </SplitPane>
+            </div>
         );
     }
 }

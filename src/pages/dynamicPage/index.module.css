@@ -19,12 +19,25 @@
 }
 
 .leftPanel {
-    height: calc(100% - 0px);
-    border-radius: 6px;
+
+    width: calc(100% - 10px);
+    height: calc(100% - 20px);
+    /* margin-left: 10px; */
+    /* margin-top: 10px; */
+    left: 10px;
+    top: 10px;
+    position: absolute;
+
+    overflow: hidden;
 }
 
 .rightPanel {
-    height: calc(100% - titleHeight);
+    width: calc(100% - 10px);
+    height: calc(100% - 20px);
+    top: 10px;
+    position: absolute;
+
+    overflow: hidden;
 
 }
 
@@ -76,4 +89,12 @@
 }
 :global(.Resizer.disabled:hover) {
     border-color: transparent;
+}
+
+.loaderfix {
+    height: calc(100% - 20px);
+    width: calc(100% - 10px);
+    margin-top: 10px;
+    margin-left: 10px;
+    border: 1px solid blue;
 }

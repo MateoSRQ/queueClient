@@ -48,7 +48,8 @@ interface State {
 
 interface Props {
     data: any,
-    onPageChange?: any
+    onPageChange?: any,
+    //[x: string]: any
 }
 
 export default class Component extends React.Component<Props, State> {

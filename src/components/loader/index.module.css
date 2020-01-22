@@ -1,6 +1,7 @@
 .component {
     width: 100%;
     height: 100%;
+    transition: opacity 700ms 300ms;
 }
 
 .loaderContainer {
@@ -14,6 +15,7 @@
     left: 0;
     top: 0;
     z-index: 999999;
+    transition: opacity 700ms 300ms;
 }
 
 .container {
@@ -23,13 +25,19 @@
     left: 0;
     top: 0;
     overflow: hidden;
-    animation-duration: 1.5s;
+    z-index: 999999;
+    transition: opacity 700ms 300ms;
     /*animation-fill-mode: both;*/
     /*animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);*/
+}
+
+.unloaded {
+    opacity: 1;
+    transition: opacity 700ms 300ms;
 }
 
 .loaded {
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.8s ease-in-out;
+    transition: opacity 700ms 300ms;
 }

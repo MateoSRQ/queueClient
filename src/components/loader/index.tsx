@@ -8,12 +8,12 @@ import 'antd/dist/antd.css';
 //log.setDefaultLevel('info')
 
 interface Props {
-    size: number,
-    tip: string,
+    size?: number,
+    tip?: string,
     duration: number,
     children?: any,
     status: string,
-    auto: number
+    auto?: number,
 }
 
 interface State {
@@ -45,6 +45,7 @@ export default class Component extends React.Component<Props, State> {
     componentDidUpdate(prevProps: any) {
         log.info('Loader:componentDidUpdate reached');
         // Uso tipico (no olvides de comparar los props):
+        console.log('xxxxxx')
         if (this.props.status !== prevProps.status) {
             this.setState({
                 status: this.props.status
@@ -54,10 +55,14 @@ export default class Component extends React.Component<Props, State> {
 
     render() {
         log.debug('Loader:render reached');
+        console.log('////')
+        console.log(this.props)
         let loaded = (this.state.status == 'loaded')?style.loaded:null;
+        let unloaded = (this.state.status == 'loaded')?style.unloaded:null;
+
         return (
             <div className={[style.component].join(' ')}>
-                <div  className={[style.container].join(' ')}>
+                <div className={[style.container, unloaded].join(' ')}>
                     {this.props.children}
                 </div>
                 <div className={[style.container, loaded].join(' ')}>
