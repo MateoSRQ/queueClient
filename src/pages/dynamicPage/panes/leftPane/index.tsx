@@ -15,6 +15,7 @@ interface ItemState {
 
 interface ItemProps {
     data?: any
+    key: string
 }
 
 
@@ -29,7 +30,7 @@ class Item extends React.Component<ItemProps, ItemState> {
         console.log('YYYY');
         console.log(this.props.data._id)
         return (
-            <div key={this.props.data._id} className={[style.item].join(' ')} >
+            <div  className={[style.item].join(' ')} >
                 {this.props.data._id}
             </div>
         )
@@ -80,9 +81,10 @@ export default class Component extends React.Component<Props, State> {
     render() {
         log.info('Page.LeftPane reached');
         let data = this.state.data.data;
-
+        console.log('----')
+        console.log (this.state.data);
         let items = data.map( (itemData: any) => {
-            return <Item data={itemData} />
+            return <Item data={itemData} key={itemData._id}/>
         })
 
         return (
@@ -101,7 +103,7 @@ export default class Component extends React.Component<Props, State> {
                 </Scrollbars>
                 <div className={[style.footer].join(' ')}>
                     <Pagination
-                        current={this.state.data.current}
+                        current={this.state.data.page}
                         pageSize={this.state.data.size}
                         total={this.state.data.total}
                         size="small"
