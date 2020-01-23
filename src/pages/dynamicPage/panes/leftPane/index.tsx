@@ -16,7 +16,7 @@ interface ItemState {
 interface ItemProps {
     data?: any
     key: string,
-    handleClick?: any
+    handleClick?: any,
 }
 
 
@@ -49,6 +49,7 @@ interface State {
 interface Props {
     data: any,
     onPageChange?: any,
+    onItemClick?: any
     //[x: string]: any
 }
 
@@ -73,7 +74,7 @@ export default class Component extends React.Component<Props, State> {
 
     handleItemClick (e: any) {
         log.info('Page.LeftPane:handleItemClick reached');
-        console.log(e);
+        this.props.onItemClick(e)
     }
 
     componentDidUpdate(prevProps: Props) {

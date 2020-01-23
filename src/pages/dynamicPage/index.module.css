@@ -38,7 +38,20 @@
     position: absolute;
 
     overflow: hidden;
+}
 
+.rightPanel > .center {
+    width: calc(100%);
+    height: calc(100%);
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    background-color: #ffffff;
 }
 
 :global(.Resizer) {

@@ -38,7 +38,7 @@ export default class Component extends React.Component<Props, State> {
 
         return (
             <div className={[style.component].join(' ')}>
-
+                    HOLA
             </div>
         );
     }

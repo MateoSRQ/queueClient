@@ -9,17 +9,20 @@ import LeftPane from './panes/leftPane';
 import RightPane from './panes/rightPane';
 
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Icon as KitIcon } from 'react-icons-kit';
+import {inbox} from 'react-icons-kit/fa/inbox';
 
 import axios from 'axios';
-
 
 interface State {
     data?: any,
     status: string,
-}
+    detailStatus: string,
+    detailData?: any
+};
 
 interface Props {
-}
+};
 
 interface Props {}
 export default class Component extends React.Component<Props, State> {
@@ -31,15 +34,23 @@ export default class Component extends React.Component<Props, State> {
         this.barRef = React.createRef();
         this.state = {
             status: 'loading',
-            data: []
+            detailStatus: 'no_data',
+            data: [],
+            detailData: []
         }
         this.handlePageChange = this.handlePageChange.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     async handlePageChange (e: number): Promise<void> {
         log.info('Page:handlePageChange reached');
-        console.log(e)
         await this.loadData(e);
+    }
+
+    async handleItemClick (e: number): Promise<void> {
+        log.info('Page:handleItemClick reached');
+        console.log(e);
+        await this.loadDetail(e);
     }
 
     async componentDidMount(): Promise<void> {
@@ -60,11 +71,59 @@ export default class Component extends React.Component<Props, State> {
         })
     }
 
+    async loadDetail(id = 1): Promise<void> {
+        log.info('Page:loadDetail reached');
+        this.setState({
+            detailStatus: 'loading'
+        });
+
+        let {data} = await axios.get(' http://127.0.0.1:3333/api/nodos/' + id);
+        this.setState({
+            detailData: data,
+            detailStatus: 'loaded'
+        })
+    }
+
+
     render() {
         log.info('Page:render reached');
         let leftPanel = null;
         if (this.state.data.length != 0) {
-            leftPanel = <LeftPane data={this.state.data} onPageChange={this.handlePageChange}/>
+            leftPanel = <LeftPane
+                data={this.state.data}
+                onPageChange={this.handlePageChange}
+                onItemClick={this.handleItemClick}
+            />
+        }
+        let r = (
+            <Loader size={50} status='loading' duration={3000}>
+
+            </Loader>
+        );
+
+        let rightPanel = (
+            <div className={[style.center].join(' ')}>
+                <div style={{width: 48, height: 48}}>
+                    <KitIcon size={'100%'} icon={inbox}/>
+                </div>
+            </div>
+        );
+
+        switch (this.state.detailStatus) {
+            case 'loading':
+                rightPanel = (
+                    <div className={[style.center].join(' ')}>
+                        LOADING
+                    </div>
+                );
+                break;
+            case 'loaded':
+                rightPanel = (
+                    <div className={[style.center].join(' ')}>
+                        LOADED
+                    </div>
+                );
+                break;
         }
 
         return (
@@ -80,9 +139,7 @@ export default class Component extends React.Component<Props, State> {
                     </div>
 
                     <div className={[style.rightPanel].join(' ')}>
-                        <Loader size={50} status='loading' duration={3000}>
-                            <RightPane />
-                        </Loader>
+                        {rightPanel}
                     </div>
                 </SplitPane>
             </div>
