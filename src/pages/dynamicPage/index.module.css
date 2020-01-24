@@ -32,7 +32,8 @@
 }
 
 .rightPanel {
-    width: calc(100% - 10px);
+    /*width: calc(100% - 10px);*/
+    width: 450px;
     height: calc(100% - 20px);
     top: 10px;
     position: absolute;

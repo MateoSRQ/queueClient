@@ -125,6 +125,7 @@ export default class Component extends React.Component<Props, State> {
                 );
                 break;
         }
+        rightPanel = <RightPane />
 
         return (
             <div className={[style.component].join(' ')}>

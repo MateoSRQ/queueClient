@@ -4,7 +4,7 @@ import log from 'loglevel';
 
 
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import Form from '../../../../components/form';
 
 interface State {
     height: number,
@@ -38,7 +38,10 @@ export default class Component extends React.Component<Props, State> {
 
         return (
             <div className={[style.component].join(' ')}>
-                    HOLA
+                 <Form.Form>
+                     <Form.Input label="Etiqueta 1" />
+                     <Form.Input label="Etiqueta 2" />
+                 </Form.Form>
             </div>
         );
     }
