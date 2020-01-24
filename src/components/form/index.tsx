@@ -9,8 +9,10 @@ import {any} from "prop-types";
 //log.setDefaultLevel('info')
 
 interface _InputProps {
+    name: string,
     form?: any,
-    label?: string
+    label?: string,
+    placeholder?: string,
 }
 interface _InputState {}
 
@@ -27,17 +29,18 @@ class _Input extends React.Component<_InputProps, _InputState> {
             <Form.Item
                 label={this.props.label?this.props.label:null}
             >
-                {getFieldDecorator('username', {
+                {getFieldDecorator(this.props.name, {
                     rules: [{ required: true, message: 'Please input your username!' }],
                 })(
                     <Input
                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Username"
+                        placeholder={this.props.placeholder}
                     />,
                 )}
             </Form.Item>
         )
     }
+    static defaultProps = {placeholder: ''};
 }
 
 
@@ -92,11 +95,6 @@ class _Component extends React.Component<Props, State> {
                 return elem;
             })
         }
-        console.log('CHILDREN');
-        console.log(this.props.children);
-        console.log(children);
-
-
         return (
             <div className={[style.component].join(' ')}>
                 <Form onSubmit={this.handleSubmit} className="login-form">

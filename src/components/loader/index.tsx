@@ -62,7 +62,7 @@ export default class Component extends React.Component<Props, State> {
 
         return (
             <div className={[style.component].join(' ')}>
-                <div className={[style.container, unloaded].join(' ')}>
+                <div  className={[style.container].join(' ')}>
                     {this.props.children}
                 </div>
                 <div className={[style.container, loaded].join(' ')}>

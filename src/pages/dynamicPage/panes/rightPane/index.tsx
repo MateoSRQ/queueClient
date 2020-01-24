@@ -39,8 +39,8 @@ export default class Component extends React.Component<Props, State> {
         return (
             <div className={[style.component].join(' ')}>
                  <Form.Form>
-                     <Form.Input label="Etiqueta 1" />
-                     <Form.Input label="Etiqueta 2" />
+                     <Form.Input label="Etiqueta 1" name="username" placeholder="ALPHA"/>
+                     <Form.Input label="Etiqueta 2" name="password" placeholder="BETA"/>
                  </Form.Form>
             </div>
         );
